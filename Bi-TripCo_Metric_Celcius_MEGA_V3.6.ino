@@ -1124,18 +1124,20 @@ void UnleadedTime() // it is called every time a change occurs at the gasoline i
         unleadTime2 = micros();
       }
   if (unleadTime2 > unleadTime1)
-      {if ((unleadTime2 - unleadTime1) > 500 && (unleadTime2 - unleadTime1) < 12000) // some conditions to avoid false readings because of noise
-       { 
-        unleadinj_Open_Duration = unleadinj_Open_Duration + (unleadTime2 - unleadTime1); //total useconds that the gasoline injector opens throughout 1sec                                                                                
-        } 
-      }  
-      unsigned long dt1 = time - last_fuel_calculation_time;                  
-      if (dt1 >= 1000) {
-        unleadedConsumption(dt1);
-        last_fuel_calculation_time = time;
+      {
+         if ((unleadTime2 - unleadTime1) > 500 && (unleadTime2 - unleadTime1) < 12000) // some conditions to avoid false readings because of noise 
+         { 
+            unleadinj_Open_Duration = unleadinj_Open_Duration + (unleadTime2 - unleadTime1); //total useconds that the gasoline injector opens throughout 1sec                                                                                
+         } 
+      
+         unsigned long dt1 = time - last_fuel_calculation_time;                  
+         if (dt1 >= 1000)
+         {
+            unleadedConsumption(dt1);
+            last_fuel_calculation_time = time;
+         }
       }
-  
-  }
+}
 
 void unleadedConsumption(unsigned int dt1)
 {
